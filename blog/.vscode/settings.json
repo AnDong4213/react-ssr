@@ -3,5 +3,11 @@
     "source.fixAll.stylelint": true
   },
   "editor.formatOnSave": true,
-  "javascript.validate.enable": false
+  "javascript.validate.enable": false,
+  "files.associations": {
+    "*.ts": "javascriptreact",
+    "*.tsx": "javascriptreact"
+  },
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "editor.defaultFormatter": "dsznajder.es7-react-js-snippets",
 }
