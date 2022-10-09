@@ -1,0 +1,16 @@
+.bin/
+node_modules/
+bower_components/
+.idea/
+.DS_Store
+.npm-debug.log
+.parcel-cache
+.parcel-cache/
+parcel-cache
+/parcel-cache
+coverage/
+dist/
+/dist
+package-lock.json
+#ignore .project created by Hbuilder
+.project
