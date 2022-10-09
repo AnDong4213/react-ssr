@@ -12,7 +12,7 @@ const Navbar: NextPage = () => {
   const router = useRouter();
   const { pathname, push } = router;
   const [isShowLogin, setIsShowLogin] = useState(false);
-  const userId = 'KKNN';
+  const userId = '';
   const avatar =
     'https://img.mukewang.com/user/545847990001d46402200220-100-100.jpg';
 
