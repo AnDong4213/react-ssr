@@ -7,14 +7,14 @@ import { LoginOutlined, HomeOutlined } from '@ant-design/icons';
 import request from 'service/fetch';
 import styles from './index.module.scss';
 import { navs } from './config';
+import Login from 'components/Login';
 
 const Navbar: NextPage = () => {
   const router = useRouter();
   const { pathname, push } = router;
   const [isShowLogin, setIsShowLogin] = useState(false);
   const userId = '';
-  const avatar =
-    'https://img.mukewang.com/user/545847990001d46402200220-100-100.jpg';
+  const avatar = 'http://localhost:3000/3.png';
 
   const handleGotoEditorPage = () => {
     if (userId) {
@@ -28,7 +28,7 @@ const Navbar: NextPage = () => {
     setIsShowLogin(true);
   };
 
-  // const handleClose = () => setIsShowLogin(false);
+  const handleClose = () => setIsShowLogin(false);
 
   const handleGotoPersonalPage = () => {
     push(`/user/${userId}`);
@@ -84,6 +84,7 @@ const Navbar: NextPage = () => {
           </Button>
         )}
       </section>
+      <Login isShow={isShowLogin} onClose={handleClose} />
     </div>
   );
 };
