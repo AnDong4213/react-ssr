@@ -25,12 +25,23 @@ const Login = (props: IProps) => {
   };
 
   const handleGetVerifyCode = () => {
-    /* if (!form?.phone) {
+    if (!form?.phone) {
       message.warning('请输入手机号');
       return;
-    } */
+    }
     setIsShowVerifyCode(true);
-    request.post('/api/user/sendVerifyCode');
+    request
+      .post('/api/user/sendVerifyCode', {
+        to: form.phone,
+        templateId: 1,
+      })
+      .then((res: any) => {
+        if (res?.code === 0) {
+          setIsShowVerifyCode(true);
+        } else {
+          message.error(res?.msg || '未知错误');
+        }
+      });
   };
 
   const handleCountDownEnd = useCallback(() => {
