@@ -30,6 +30,7 @@ const Login = (props: IProps) => {
       return;
     } */
     setIsShowVerifyCode(true);
+    request.post('/api/user/sendVerifyCode');
   };
 
   const handleCountDownEnd = useCallback(() => {
