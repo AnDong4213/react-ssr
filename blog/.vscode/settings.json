@@ -4,15 +4,6 @@
   },
   "editor.formatOnSave": true,
   "javascript.validate.enable": false,
-  "files.associations": {
-    "*.ts": "javascriptreact",
-    "*.tsx": "javascriptreact"
-  },
-  "typescript.tsdk": "node_modules\\typescript\\lib",
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+  "editor.fontFamily": "Input Mono",
+  "editor.fontSize": 15,
 }

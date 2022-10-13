@@ -36,10 +36,12 @@ const Login = (props: IProps) => {
         templateId: 1,
       })
       .then((res: any) => {
+        console.log(res);
         if (res?.code === 0) {
           setIsShowVerifyCode(true);
         } else {
           message.error(res?.msg || '未知错误');
+          setIsShowVerifyCode(false);
         }
       });
   };
@@ -58,7 +60,17 @@ const Login = (props: IProps) => {
     });
   };
 
-  const handleLogin = () => {};
+  const handleLogin = () => {
+    request
+      .post('/api/user/login', {
+        ...form,
+      })
+      .then((res: any) => {
+        if (res?.code === 0) {
+          console.log(res);
+        }
+      });
+  };
 
   const handleOAuthGithub = () => {};
 

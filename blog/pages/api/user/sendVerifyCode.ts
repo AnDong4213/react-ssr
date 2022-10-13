@@ -5,8 +5,10 @@ import { format } from 'date-fns';
 import { withIronSessionApiRoute } from 'iron-session/next';
 import request from 'service/fetch';
 import { ironOptions } from 'config/index';
+import { ISession } from 'pages/api/index';
 
 async function sendVerifyCode(req: NextApiRequest, res: NextApiResponse) {
+  const session: ISession = req.session;
   const { to = '', templateId = '1' } = req.body;
 
   const AppId = '8aaf070883c5db6a0183c74970ff0027';
@@ -24,7 +26,7 @@ async function sendVerifyCode(req: NextApiRequest, res: NextApiResponse) {
   console.log(to, templateId, NowDate, SigParameter, Authorization);
   const url = `https://app.cloopen.com:8883/2013-12-26/Accounts/${AccountId}/SMS/TemplateSMS?sig=${SigParameter}`;
 
-  const response = await request.post(
+  const response: any = await request.post(
     url,
     {
       to,
@@ -41,10 +43,24 @@ async function sendVerifyCode(req: NextApiRequest, res: NextApiResponse) {
 
   console.log('response', response);
 
-  res.status(200).json({
-    code: 0,
-    data: 123,
-  });
+  const { statusCode, templateSMS, statusMsg } = response;
+
+  if (statusCode === '000000') {
+    session.verifyCode = verifyCode;
+    await session.save();
+    res.status(200).json({
+      code: 0,
+      msg: statusMsg,
+      data: {
+        templateSMS,
+      },
+    });
+  } else {
+    res.status(200).json({
+      code: statusCode,
+      msg: statusMsg,
+    });
+  }
 }
 
 export default withIronSessionApiRoute(sendVerifyCode, ironOptions);
