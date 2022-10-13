@@ -4,6 +4,6 @@
   },
   "editor.formatOnSave": true,
   "javascript.validate.enable": false,
-  "editor.fontFamily": "Input Mono",
-  "editor.fontSize": 15,
-}
+  // "editor.fontFamily": "Input Mono",
+  "editor.fontSize": 16,
+  "editor.fontWeight": "bold"
