@@ -41,7 +41,7 @@ async function sendVerifyCode(req: NextApiRequest, res: NextApiResponse) {
     }
   );
 
-  console.log('response', response);
+  console.log('response---', response, verifyCode);
 
   const { statusCode, templateSMS, statusMsg } = response;
 

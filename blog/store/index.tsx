@@ -7,7 +7,8 @@ interface IProps {
   children: ReactElement;
 }
 
-enableStaticRendering(!process.browser);
+// enableStaticRendering(!process.browser);
+enableStaticRendering(typeof window === 'undefined');
 
 const StoreContext = createContext({});
 
@@ -20,10 +21,10 @@ export const StoreProvider = ({ initialValue, children }: IProps) => {
 };
 
 export const useStore = () => {
-  const store: IStore = useContext(StoreContext) as IStore;
+  const store = useContext(StoreContext) as IStore; // IStore
 
   if (!store) {
     throw new Error('数据不存在');
   }
   return store;
-}
+};

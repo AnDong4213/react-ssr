@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import { useState } from 'react';
+import { observer } from 'mobx-react-lite';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Button, Avatar, Dropdown, Menu, message } from 'antd';
@@ -8,13 +9,16 @@ import request from 'service/fetch';
 import styles from './index.module.scss';
 import { navs } from './config';
 import Login from 'components/Login';
+import { useStore } from 'store/index';
 
 const Navbar: NextPage = () => {
+  const store = useStore();
   const router = useRouter();
   const { pathname, push } = router;
+  console.log('store', store);
+  const { userId, avatar } = store.user.userInfo;
   const [isShowLogin, setIsShowLogin] = useState(false);
-  const userId = '';
-  const avatar = 'http://localhost:3000/3.png';
+  // const userId = ''; const avatar = 'http://localhost:3000/3.png';
 
   const handleGotoEditorPage = () => {
     if (userId) {
@@ -37,7 +41,8 @@ const Navbar: NextPage = () => {
   const handleLogout = () => {
     request.post('/api/user/logout').then((res: any) => {
       if (res?.code === 0) {
-        // store.user.setUserInfo({});
+        store.user.setUserInfo({});
+        message.success('退出成功');
       }
     });
   };
@@ -89,4 +94,4 @@ const Navbar: NextPage = () => {
   );
 };
 
-export default Navbar;
+export default observer(Navbar);

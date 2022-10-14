@@ -1,5 +1,5 @@
 import { ChangeEvent, useState, useCallback } from 'react';
-import { message } from 'antd';
+import { message, Button } from 'antd';
 import { observer } from 'mobx-react-lite';
 import request from 'service/fetch';
 import { useStore } from 'store/index';
@@ -19,16 +19,18 @@ const Login = (props: IProps) => {
     phone: '',
     verify: '',
   });
+  const [disBtn, setDisBtn] = useState(false);
 
   const handleClose = () => {
     onClose && onClose();
   };
 
   const handleGetVerifyCode = () => {
-    if (!form?.phone) {
+    if (!form?.phone.trim()) {
       message.warning('请输入手机号');
       return;
     }
+
     setIsShowVerifyCode(true);
     request
       .post('/api/user/sendVerifyCode', {
@@ -61,6 +63,16 @@ const Login = (props: IProps) => {
   };
 
   const handleLogin = () => {
+    if (!form?.phone.trim()) {
+      message.warning('请输入手机号');
+      return;
+    }
+    if (!form?.verify.trim()) {
+      message.warning('请输入验证码');
+      return;
+    }
+    setDisBtn(true);
+
     request
       .post('/api/user/login', {
         ...form,
@@ -69,7 +81,13 @@ const Login = (props: IProps) => {
       .then((res: any) => {
         if (res?.code === 0) {
           console.log(res);
+          store.user.setUserInfo(res.data);
+          // console.log(store);
+          onClose && onClose();
+        } else {
+          message.error(res?.msg || '未知错误');
         }
+        setDisBtn(false);
       });
   };
 
@@ -109,9 +127,14 @@ const Login = (props: IProps) => {
           </span>
         </div>
 
-        <div className={styles.loginBtn} onClick={handleLogin}>
+        <Button
+          type="primary"
+          className={styles.loginBtn}
+          onClick={handleLogin}
+          loading={disBtn}
+        >
           登录
-        </div>
+        </Button>
 
         <div className={styles.otherLogin} onClick={handleOAuthGithub}>
           使用 Github 登录
@@ -132,4 +155,4 @@ const Login = (props: IProps) => {
   ) : null;
 };
 
-export default Login;
+export default observer(Login);

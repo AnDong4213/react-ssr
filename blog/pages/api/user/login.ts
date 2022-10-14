@@ -1,18 +1,22 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { withIronSessionApiRoute } from 'iron-session/next';
+import { Cookie } from 'next-cookie';
 import { ironOptions } from 'config/index';
 import { ISession } from 'pages/api/index';
 import { prepareConnection } from 'db/index';
 import { User, UserAuth } from 'db/entity/index';
+import { setCookie } from 'utils/index';
 
 async function login(req: NextApiRequest, res: NextApiResponse) {
   const session: ISession = req.session;
+  const cookies = Cookie.fromApiRoute(req, res);
   const { phone = '', verify = '', identity_type = 'phone' } = req.body;
 
   const db = await prepareConnection();
   const userAuthRepo = db.getRepository(UserAuth);
 
   // const users = await userRepo.find();
+  console.log('session--', session);
   if (String(session.verifyCode) === String(verify)) {
     // 验证码正确，在 user_auths 表中查找 identity_type 是否有记录
     const userAuth = await userAuthRepo.findOne(
@@ -33,6 +37,8 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
       session.avatar = avatar;
 
       await session.save();
+
+      setCookie(cookies, { id, nickname, avatar });
 
       res.status(200).json({
         code: 0,
@@ -67,6 +73,8 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
       session.avatar = avatar;
 
       await session.save();
+
+      setCookie(cookies, { id, nickname, avatar });
 
       res.status(200).json({
         code: 0,
