@@ -15,7 +15,7 @@ const Navbar: NextPage = () => {
   const store = useStore();
   const router = useRouter();
   const { pathname, push } = router;
-  console.log('store', store);
+  // console.log('store', store);
   const { userId, avatar } = store.user.userInfo;
   const [isShowLogin, setIsShowLogin] = useState(false);
   // const userId = ''; const avatar = 'http://localhost:3000/3.png';

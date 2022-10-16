@@ -91,6 +91,10 @@ const Login = (props: IProps) => {
       });
   };
 
+  // https://github.com/settings/applications/2018438
+  // 26dbc7225a9a7297fabf2bc36592166bbc0bfcfb
+  // Client ID  ff43e4bab3f5e0fe68bc
+
   const handleOAuthGithub = () => {};
 
   return isShow ? (
