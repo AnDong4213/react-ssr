@@ -5,6 +5,7 @@ import request from 'service/fetch';
 import { useStore } from 'store/index';
 import CountDown from 'components/CountDown';
 import styles from './index.module.scss';
+import { githubClientID, redirectUri } from 'utils/constant';
 
 interface IProps {
   isShow: boolean;
@@ -95,7 +96,17 @@ const Login = (props: IProps) => {
   // 26dbc7225a9a7297fabf2bc36592166bbc0bfcfb
   // Client ID  ff43e4bab3f5e0fe68bc
 
-  const handleOAuthGithub = () => {};
+  // https://github.com/login/oauth/authorize?client_id=60483ab971aa5416e000&redirect_uri=https://juejin.cn/passport/auth/login_success&state=b4bdbdf93gASoVCgoVPZIDE1OWIzMzE1MzAyMTVkZmIxNTg0NzJiM2JlMGZlMmY1oU6-aHR0cHM6Ly9qdWVqaW4uY24vb2F1dGgtcmVzdWx0oVYBoUkAoUQAoUHRCjChTdEKMKFIqWp1ZWppbi5jbqFSBKJQTNEEFaZBQ1RJT06goUyyaHR0cHM6Ly9qdWVqaW4uY24voVTZIDY1OTAzYmY3ODU1NGEyNzM1YjBiOTQwYWRhYzRkMjg0oVcAoUYAolNBAKFVww%3D%3D&allow_signup=true&scope=user:email
+
+  // https://api.weibo.com/oauth2/authorize?client_id=2380925997&response_type=code&display=mobile&state=40b894893gASoVCgoVPZIDM5ZTc2YTNlMDI0NzljMzQ5ODhmNzNjMzJkZTI1M2M2oU6-aHR0cHM6Ly9qdWVqaW4uY24vb2F1dGgtcmVzdWx0oVYBoUkAoUQAoUHRCjChTdEKMKFIqWp1ZWppbi5jbqFSBKJQTNEE_KZBQ1RJT06goUyyaHR0cHM6Ly9qdWVqaW4uY24voVTZIGU3MDAwMWJiYzVkNTQ2M2QwMDRlOWI3ODFmMzJhYzEzoVcAoUYAolNBAKFVww%3D%3D&redirect_uri=https%3A%2F%2Fjuejin.cn%2Fpassport%2Fauth%2Flogin_success
+
+  // https://open.weixin.qq.com/connect/qrconnect?appid=wx5059f665cac93f16&redirect_uri=https%3A%2F%2Fjuejin.cn%2Fpassport%2Fauth%2Flogin_success&response_type=code&scope=snsapi_login&state=9107c70d3gASoVCgoVPZIGY1YmU0MDEwMGQ4M2QxNDc3M2QwNTRkNzc1N2YxNjk4oU6-aHR0cHM6Ly9qdWVqaW4uY24vb2F1dGgtcmVzdWx0oVYBoUkAoUQAoUHRCjChTdEKMKFIqWp1ZWppbi5jbqFSBKJQTNEE_aZBQ1RJT06goUyyaHR0cHM6Ly9qdWVqaW4uY24voVTZIDFmZmE5YWQ1YTU5MTZmNTExNTVkZDc5OTY3MGUxYjJmoVcAoUYAolNBAKFVww%253D%253D#wechat_redirect
+
+  const handleOAuthGithub = () => {
+    window.open(
+      `https://github.com/login/oauth/authorize?client_id=${githubClientID}&redirect_uri=${redirectUri}`
+    );
+  };
 
   return isShow ? (
     <div className={styles.loginArea}>
