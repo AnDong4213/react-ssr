@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
+
+const removeImports = require('next-remove-imports')();
+
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
@@ -6,5 +9,10 @@ const nextConfig = {
   // experimental: {
   //   forceSwcTransforms: true,
   // },
+  images: {
+    domains: ['img1.mukewang.com'],
+  },
+  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
 };
-module.exports = nextConfig;
+
+module.exports = removeImports(nextConfig);

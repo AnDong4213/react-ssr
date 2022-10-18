@@ -1,9 +1,10 @@
 import type { NextPage } from 'next';
+import styles from './index.module.scss';
 
 const Footer: NextPage = () => {
   return (
-    <div>
-      <h2>我是底部</h2>
+    <div className={styles.footer}>
+      <p>Next.js + React</p>
     </div>
   );
 };
