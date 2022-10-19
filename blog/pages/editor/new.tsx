@@ -56,7 +56,7 @@ const NewEditor = () => {
   };
 
   const handleContentChange = (content: any) => {
-    console.log('content', content);
+    // console.log('content', content);
     setContent(content);
   };
 

@@ -43,6 +43,7 @@ const Navbar: NextPage = () => {
       if (res?.code === 0) {
         store.user.setUserInfo({});
         message.success('退出成功');
+        push('/');
       }
     });
   };

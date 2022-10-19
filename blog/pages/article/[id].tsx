@@ -23,7 +23,7 @@ export async function getServerSideProps({ params }: any) {
     where: {
       id: articleId,
     },
-    relations: ['user'],
+    relations: ['user', 'comments', 'comments.user'],
   });
 
   if (article) {
@@ -46,8 +46,39 @@ const ArticleDetail = (props: IProps) => {
   const {
     user: { nickname, avatar, id },
   } = article;
+  // console.log(article);
+  // console.log(loginUserInfo);
   const [inputVal, setInputVal] = useState('');
   const [comments, setComments] = useState(article?.comments || []);
+
+  const handleComment = () => {
+    request
+      .post('/api/comment/publish', {
+        articleId: article?.id,
+        content: inputVal,
+      })
+      .then((res: any) => {
+        if (res?.code === 0) {
+          message.success('发表成功');
+          const newComments = [
+            {
+              id: Math.random(),
+              create_time: new Date(),
+              update_time: new Date(),
+              content: inputVal,
+              user: {
+                avatar: loginUserInfo?.avatar,
+                nickname: loginUserInfo?.nickname,
+              },
+            },
+          ].concat([...(comments as any)]);
+          setComments(newComments);
+          setInputVal('');
+        } else {
+          message.error('发表失败');
+        }
+      });
+  };
 
   return (
     <div>
@@ -71,12 +102,12 @@ const ArticleDetail = (props: IProps) => {
         <MarkDown className={styles.markdown}>{article?.content}</MarkDown>
       </div>
       <div className={styles.divider}></div>
-      {/* <div className="content-layout">
+      <div className="content-layout">
         <div className={styles.comment}>
           <h3>评论</h3>
           {loginUserInfo?.userId && (
             <div className={styles.enter}>
-              <Avatar src={avatar} size={40} />
+              <Avatar src={loginUserInfo.avatar} size={40} />
               <div className={styles.content}>
                 <Input.TextArea
                   placeholder="请输入评论"
@@ -109,9 +140,13 @@ const ArticleDetail = (props: IProps) => {
                 </div>
               </div>
             ))}
+
+            {comments?.length > 0 ? null : (
+              <h3 className={styles.h3}>暂无评论</h3>
+            )}
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };
