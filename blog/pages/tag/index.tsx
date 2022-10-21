@@ -7,7 +7,7 @@ import request from 'service/fetch';
 import styles from './index.module.scss';
 
 const { TabPane } = Tabs;
-console.log('ANTD_ICONS---', ANTD_ICONS);
+// console.log('ANTD_ICONS---', ANTD_ICONS);
 interface IUser {
   id: number;
   nickname: string;
@@ -38,11 +38,32 @@ const Tag = () => {
         setAllTags(allTags);
       }
     });
-  }, []);
+  }, [needRefresh]);
 
-  const handleUnFollow = (tagId: number) => {};
+  const handleUnFollow = (tagId: number) => {
+    if (!userId) {
+      message.warning('请先登录');
+      return
+    }
+  };
 
-  const handleFollow = (tagId: number) => {};
+  const handleFollow = (tagId: number) => {
+    if (!userId) {
+      message.warning('请先登录');
+      return
+    }
+    request.post('/api/tag/follow', {
+      type: 'follow',
+      tagId
+    }).then((res: any) => {
+      if (res?.code === 0) {
+        message.success('关注成功');
+        setNeedRefresh(!needRefresh);
+      } else {
+        message.error(res?.msg || '关注失败');
+      }
+    })
+  };
 
   const items = [
     {
