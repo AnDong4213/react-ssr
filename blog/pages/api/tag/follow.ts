@@ -43,11 +43,12 @@ async function follow(req: NextApiRequest, res: NextApiResponse) {
       tag.follow_count = tag?.follow_count - 1;
     }
   }
-  console.log('user---', user);
-  console.log('tag---', tag);
+  // console.log('user---', user);
+  // console.log('tag---', tag);
 
   if (tag) {
     const resTag = await tagRepo?.save(tag);
+    // console.log('resTag---', resTag);
     res?.status(200)?.json({
       code: 0,
       msg: '',

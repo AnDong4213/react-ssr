@@ -6,7 +6,6 @@ import { useStore } from 'store/index';
 import request from 'service/fetch';
 import styles from './index.module.scss';
 
-const { TabPane } = Tabs;
 // console.log('ANTD_ICONS---', ANTD_ICONS);
 interface IUser {
   id: number;
@@ -41,11 +40,18 @@ const Tag = () => {
   }, [needRefresh]);
 
   const handleUnFollow = (tagId: number) => {
-    if (!userId) {
-      message.warning('请先登录');
-      return
-    }
-  };
+    request.post('/api/tag/follow', {
+      type: 'unfollow',
+      tagId
+    }).then((res: any) => {
+      if (res?.code === 0) {
+        message.success('取关成功');
+        setNeedRefresh(!needRefresh);
+      } else {
+        message.error(res?.msg || '取关失败');
+      }
+    })
+  }
 
   const handleFollow = (tagId: number) => {
     if (!userId) {

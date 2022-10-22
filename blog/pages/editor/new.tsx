@@ -17,28 +17,30 @@ const NewEditor = () => {
   const { userId } = store.user.userInfo;
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [loading, setLoading] = useState(false)
-  // const [tagIds, setTagIds] = useState([]);
-  // const [allTags, setAllTags] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [tagIds, setTagIds] = useState([]);
+  const [allTags, setAllTags] = useState([]);
 
-  /* useEffect(() => {
+  useEffect(() => {
     request.get('/api/tag/get').then((res: any) => {
+      console.log(res);
       if (res?.code === 0) {
         setAllTags(res?.data?.allTags || []);
       }
     });
-  }, []); */
+  }, []);
 
   const handlePublish = () => {
     if (!title) {
       message.warning('请输入文章标题');
       return;
     }
-    setLoading(true)
+    setLoading(true);
     request
       .post('/api/article/publish', {
         title,
         content,
+        tagIds
       })
       .then((res: any) => {
         if (res?.code === 0) {
@@ -47,7 +49,7 @@ const NewEditor = () => {
         } else {
           message.error(res?.msg || '发布失败');
         }
-        setLoading(false)
+        setLoading(false);
       });
   };
 
@@ -61,7 +63,8 @@ const NewEditor = () => {
   };
 
   const handleSelectTag = (value: []) => {
-    // setTagIds(value);
+    console.log(value)
+    setTagIds(value);
   };
 
   return (
@@ -73,6 +76,19 @@ const NewEditor = () => {
           value={title}
           onChange={handleTitleChange}
         />
+        <Select
+          className={styles.tag}
+          mode="multiple"
+          allowClear
+          placeholder="请选择标签"
+          onChange={handleSelectTag}
+        >
+          {allTags?.map((tag: any) => (
+            <Select.Option key={tag?.id} value={tag?.id}>
+              {tag?.title}
+            </Select.Option>
+          ))}
+        </Select>
         <Button
           className={styles.button}
           type="primary"
