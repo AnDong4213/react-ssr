@@ -9,7 +9,7 @@ async function get(req: NextApiRequest, res: NextApiResponse) {
   const db = await prepareConnection();
   const articleRepo = db.getRepository(Article);
 
-  let articles = [];
+  let articles: any[] = [];
 
   if (tag_id) {
     articles = await articleRepo.find({
@@ -21,9 +21,11 @@ async function get(req: NextApiRequest, res: NextApiResponse) {
       },
     });
   } else {
-    articles = await articleRepo.find({
-      relations: ['user', 'tags'],
-    });
+    if (tag_id == 0) {
+      articles = await articleRepo.find({
+        relations: ['user', 'tags'],
+      });
+    }
   }
 
   res?.status(200).json({

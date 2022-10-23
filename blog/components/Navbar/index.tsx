@@ -4,12 +4,31 @@ import { observer } from 'mobx-react-lite';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Button, Avatar, Dropdown, Menu, message } from 'antd';
+import type { MenuProps } from 'antd';
 import { LoginOutlined, HomeOutlined } from '@ant-design/icons';
 import request from 'service/fetch';
 import styles from './index.module.scss';
 import { navs } from './config';
 import Login from 'components/Login';
 import { useStore } from 'store/index';
+
+type MenuItem = Required<MenuProps>['items'][number];
+
+function getItem(
+  label: React.ReactNode,
+  key: React.Key,
+  icon?: React.ReactNode,
+  children?: MenuItem[],
+  type?: 'group'
+): MenuItem {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  };
+}
 
 const Navbar: NextPage = () => {
   const store = useStore();
@@ -49,17 +68,23 @@ const Navbar: NextPage = () => {
   };
 
   const renderDropDownMenu = () => {
+    const items: MenuProps['items'] = [
+      getItem('个人主页', '1', <HomeOutlined />),
+      getItem('退出系统', '2', <LoginOutlined />),
+    ];
+
+    const onClick: MenuProps['onClick'] = (e) => {
+      // console.log('click ', e);
+      if (e.key === '1') {
+        handleGotoPersonalPage();
+      }
+      if (e.key === '2') {
+        handleLogout();
+      }
+    };
+
     return (
-      <Menu>
-        <Menu.Item key="1" onClick={handleGotoPersonalPage}>
-          <HomeOutlined />
-          &nbsp; 个人主页
-        </Menu.Item>
-        <Menu.Item key="2" onClick={handleLogout}>
-          <LoginOutlined />
-          &nbsp; 退出系统
-        </Menu.Item>
-      </Menu>
+      <Menu items={items} defaultOpenKeys={['1']} onClick={onClick}></Menu>
     );
   };
 

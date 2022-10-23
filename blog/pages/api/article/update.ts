@@ -24,7 +24,7 @@ async function update(req: NextApiRequest, res: NextApiResponse) {
     where: {
       id,
     },
-    relations: ['user'],
+    relations: ['user', 'tags'],
   });
 
   if (article) {
@@ -34,7 +34,7 @@ async function update(req: NextApiRequest, res: NextApiResponse) {
     article.tags = newTags;
 
     const resArticle = await articleRepo.save(article);
-    console.log('resArticle---', resArticle);
+    // console.log('resArticle---', resArticle);
 
     if (resArticle) {
       res.status(200).json({ data: resArticle, code: 0, msg: '更新成功' });
