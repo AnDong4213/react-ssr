@@ -106,7 +106,7 @@ const Navbar: NextPage = () => {
         {userId ? (
           <>
             <Dropdown overlay={renderDropDownMenu()} placement="bottomLeft">
-              <Avatar src={avatar} size={32} />
+              <Avatar style={{ cursor: 'pointer' }} src={avatar} size={32} />
             </Dropdown>
           </>
         ) : (
