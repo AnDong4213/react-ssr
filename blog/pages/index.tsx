@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import { Divider, Button } from 'antd';
 import classnames from 'classnames';
 import { prepareConnection } from 'db/index';
-import { Article, Tag } from 'db/entity';
+import { Tag } from 'db/entity';
 // import ListItem from 'components/ListItem';
 import { IArticle } from 'pages/api/index';
 import request from 'service/fetch';
