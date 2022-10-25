@@ -6,10 +6,12 @@ import type { NextRequest } from 'next/server';
 export function middleware(request: NextRequest) {
   console.log('-------------------', request);
   console.log('-------------------', request.nextUrl);
-  return NextResponse.redirect(new URL('/about-2', request.url));
+  console.log('+++++++++++++++++++', request.url);
+  // return NextResponse.redirect(new URL('/404', request.url));
+  return NextResponse.next();
 }
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: '/user/:path*',
+  // matcher: '/:path*',
 };
