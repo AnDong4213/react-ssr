@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@mdx-js/loader": "^2.1.5",
+    "@mdx-js/react": "^2.1.5",
+    "@next/mdx": "^12.3.1",
     "@uiw/react-md-editor": "^3.6.0",
     "antd": "^4.18.7",
     "axios": "^0.26.0",
