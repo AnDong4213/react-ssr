@@ -1,0 +1,9 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.stylelint": true
+  },
+  "editor.formatOnSave": true,
+  "javascript.validate.enable": false,
+  "editor.fontFamily": "Input Mono",
+  "editor.fontSize": 15,
+  // "editor.fontWeight": "bold"
