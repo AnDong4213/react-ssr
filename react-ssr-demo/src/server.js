@@ -1,7 +1,9 @@
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
-import Routes from "./routes";
+import { Provider } from "react-redux";
+import store from "./store";
+import Routes, { routesConfig } from "./routes";
 
 const express = require("express");
 const app = express();
@@ -10,10 +12,15 @@ const port = process.env.PORT || 3000;
 app.use(express.static("dist/public"));
 
 app.get("*", (req, res) => {
+  console.log(req.url);
+  console.log(routesConfig);
+
   const content = ReactDOMServer.renderToString(
-    <StaticRouter location={req.url}>
-      <Routes />
-    </StaticRouter>
+    <Provider store={store}>
+      <StaticRouter location={req.url}>
+        <Routes />
+      </StaticRouter>
+    </Provider>
   );
 
   console.log("content--", content);
