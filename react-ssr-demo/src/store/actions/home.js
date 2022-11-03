@@ -17,7 +17,7 @@ export const fetchHomeData = async (dispatch) => {
           }
         ]
       });
-    }, 2000);
+    }, 1000);
   });
 
   dispatch({

@@ -11,7 +11,6 @@ const Home = () => {
   const dispatch = useDispatch();
   const homeData = useSelector((state) => state.home);
 
-  console.log(homeData);
   useEffect(() => {
     dispatch(fetchHomeData);
   }, []);

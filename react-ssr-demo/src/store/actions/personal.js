@@ -9,7 +9,7 @@ export const fetchPersonalData = async (dispath) => {
           job: "前端工程师"
         }
       });
-    }, 2000);
+    }, 1000);
   });
 
   dispath({
