@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOMServer from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
 import { Provider } from "react-redux";
+import { Helmet } from "react-helmet";
 import createStoreInstance from "./store";
 import Routes, { routesConfig } from "./routes";
 
@@ -34,9 +35,14 @@ app.get("*", (req, res) => {
       </Provider>
     );
 
+    const helmet = Helmet.renderStatic();
+
     const html = `
     <html>
-      <head></head>
+      <head>
+        ${helmet?.title?.toString()}
+        ${helmet?.meta?.toString()}
+      </head>
       <body>
         <div id="root">${content}</div>
         <script>

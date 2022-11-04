@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet";
 import { fetchHomeData } from "../store/actions/home";
 
 const handleClick = () => {
@@ -15,8 +16,19 @@ const Home = () => {
     dispatch(fetchHomeData);
   }, []);
 
+  const renderHead = () => {
+    return (
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>首页</title>
+        <meta name="description" content="ssr application" />
+      </Helmet>
+    );
+  };
+
   return (
     <div>
+      {renderHead()}
       <h2>Home</h2>
       <ul>
         {homeData?.articles?.map((article) => (
